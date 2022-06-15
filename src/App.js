@@ -1,11 +1,12 @@
-import './App.css';
+import "./App.css";
+import Vcard from "./components/Vcard";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        QR Virtual Card
-      </header>
+      <Header />
+      <Vcard />
     </div>
   );
 }
