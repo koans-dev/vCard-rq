@@ -3,6 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import QRCode from "react-qr-code";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { Divider } from "@material-ui/core";
+import BusinessIcon from "@mui/icons-material/Business";
+import PhoneIcon from "@mui/icons-material/Phone";
+import MailIcon from "@mui/icons-material/Mail";
+import WorkIcon from "@mui/icons-material/Work";
+import { Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,10 +44,11 @@ const Vcard = ({ handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDisplay(true);
+
     setQrText(
       `BEGIN:VCARD\r\nVERSION:4.0\r\nN:${name}\r\nFN:${name}\r\nORG:${company}\r\nTITLE:${title}\r\nTEL;TYPE=cell:${phone}\r\nEMAIL;PREF;INTERNET:${email}\r\nEND:VCARD`
     );
+    setDisplay(true);
   };
 
   const resetInputField = () => {
@@ -89,7 +99,54 @@ const Vcard = ({ handleClose }) => {
           </Button>
         </div>
       </form>
-      <div>{display ? <QRCode value={qrText} /> : null}</div>
+      <div className={classes.root}>
+        {display && (title && name && company && email && phone) ? (
+          <Paper elevation={3}>
+            <Card>
+              <QRCode
+                size={256}
+                style={{ height: "auto", maxWidth: "30%", width: "%" }}
+                value={qrText}
+                viewBox={`0 0 256 256`}
+              />
+
+              <Divider />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {name}
+                </Typography>
+                <Typography variant="body3" color="#0080ff">
+                  <BusinessIcon
+                    fontSize="small"
+                    color="primary"
+                    sx={{ fontSize: 19 }}
+                  />{" "}
+                  {company} <br />
+                  <MailIcon
+                    fontSize="small"
+                    color="primary"
+                    sx={{ fontSize: 19 }}
+                  />{" "}
+                  {email} <br />
+                  <PhoneIcon
+                    fontSize="small"
+                    color="primary"
+                    sx={{ fontSize: 19 }}
+                  />{" "}
+                  {phone}
+                  <br />
+                  <WorkIcon
+                    fontSize="small"
+                    color="primary"
+                    sx={{ fontSize: 19 }}
+                  />{" "}
+                  {title}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Paper>
+        ) : null}
+      </div>
     </div>
   );
 };
